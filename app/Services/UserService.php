@@ -9,6 +9,7 @@ class UserService extends Service{
     {
         if(User::where('phone', $data['phone'])->where('status', 1)->first()) return false;
         if(isset($data['password'])) $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        $data['pid'] = auth()->user()->id;
         return User::create($data);
     }
 
@@ -43,7 +44,7 @@ class UserService extends Service{
         $info = User::where('phone', $data['phone'])->first();
         if($info){
             if(password_verify($data['password'],$info->password)){
-                $this->update($info->id,['last_login_time'=>date('Y-m-d H:i:s')]);
+                User::where('id', $info->id)->update(['last_login_time'=>date('Y-m-d H:i:s')]);
                 auth()->login($info);
                 return $info;
             }
@@ -54,5 +55,12 @@ class UserService extends Service{
     public function loginout()
     {
         auth()->logout();
+    }
+
+    public function users($data = [])
+    {
+        return User::select('username', 'phone', 'users.id', 'agents.name as agent_name')
+                   ->leftJoin('agents', 'users.agent_id', 'agents.id')
+                   ->where('pid', auth()->user()->id)->get()->toArray();
     }
 }

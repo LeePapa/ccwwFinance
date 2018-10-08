@@ -21,7 +21,13 @@ Route::prefix('view')->group(function(){
     Route::get('brand', 'BrandController@blade');
     Route::get('product', 'ProductController@blade');
     Route::get('product_exchange', 'ProductExchangeController@blade');
+    Route::get('login', 'UserController@loginBlade');
 });
+
+Route::prefix('admin')->group(function(){
+    Route::post('login', 'UserController@login');
+});
+
 //资源管理路由
 Route::resource('agent', 'AgentController');
 Route::resource('user', 'UserController');

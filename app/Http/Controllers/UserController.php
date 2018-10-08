@@ -17,13 +17,19 @@ class UserController extends Controller
     {
         return view('user.user');
     }
+
+    public function loginBlade()
+    {
+        return view('user.login');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->type == 'select') return $this->users($request);
         return $this->success($this->userService->show());
     }
 
@@ -113,5 +119,26 @@ class UserController extends Controller
     public function destroy($id)
     {
         return $this->success($this->userService->delete($id));
+    }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'phone'   => 'required',
+            'password'=>'required'
+        ]);
+        if ($validator->fails()) $this->error();
+
+        $res = $this->userService->login([
+            'phone'=>$request->phone,
+            'password'=>$request->password
+        ]);
+
+        return $res ? $this->success('登录成功') : $this->error('账号密码错误');
+    }
+
+    public function users(Request $request)
+    {
+        return $this->success($this->userService->users());
     }
 }

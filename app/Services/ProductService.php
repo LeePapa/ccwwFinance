@@ -61,24 +61,34 @@ class ProductService extends Service{
         $data = Product::select('products.*','brands.brand_name')->where($where)->leftJoin('brands','brands.id','products.brand_id')
                        ->orderBy('stock')->orderBy('brand_id')->paginate(10)->toArray();
         foreach($data['data'] as &$info){
-            $prices = AgentPrice::select('agents.*','agent_prices.price')->where('product_id', $info['id'])
-                                ->leftJoin('agents', 'agents.id', 'agent_prices.agent_id')->get()->toArray();
-            foreach ($prices as &$price) {
-                $price['price'] = $price['price']/100;
-            }
-            $info['prices'] = $manpro->indexArrKey($prices, 'id');
+            $info['prices'] = $this->prices($info['id']);
         }
         return $data;
     }
 
     public function read($id)
     {
-        return Product::find($id)->toArray();
+        $data = Product::find($id)->toArray();
+        $data['prices'] = $this->prices($id);
+        $data['userPrice'] = $data['prices'][auth()->user()->agent_id]['price'];
+        return $data;
     }
 
     public function products($search)
     {
         $data = Product::select('id', 'name')->where('brand_id', $search['brand_id'])->get();
         return $data ? $data->toArray() : [];
+    }
+
+    public function prices($product_id)
+    {
+        $manpro = new Manpro();
+        $prices = AgentPrice::select('agents.*','agent_prices.price')->where('product_id', $product_id)
+                                ->leftJoin('agents', 'agents.id', 'agent_prices.agent_id')->get()->toArray();
+        foreach ($prices as &$price) {
+            $price['price'] = $price['price']/100;
+        }
+        $prices = $manpro->indexArrKey($prices, 'id');
+        return $prices;
     }
 }

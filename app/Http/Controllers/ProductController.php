@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->success($this->productService->read($id));
     }
 
     /**
@@ -120,7 +120,7 @@ class ProductController extends Controller
         return $res ? $this->success() : $this->error();
     }
 
-        public function products(Request $request)
+    public function products(Request $request)
     {
         return $this->success($this->productService->products([
             'brand_id'=>$request->brand_id
