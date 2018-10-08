@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66ca7343889332c2b8ecca11c251430c",
+    "content-hash": "763725d8687ae3ff7b937a2b6d56e0aa",
     "packages": [
+        {
+            "name": "ccwwonebyone/manpro",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ccwwonebyone/manpro.git",
+                "reference": "b19729a927d2ea0e7cb6e79e9fecbd4af72bd52c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ccwwonebyone/manpro/zipball/b19729a927d2ea0e7cb6e79e9fecbd4af72bd52c",
+                "reference": "b19729a927d2ea0e7cb6e79e9fecbd4af72bd52c",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "tool",
+            "autoload": {
+                "psr-4": {
+                    "Manpro\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ccww onebyone",
+                    "email": "ccwwonebyone@163.com"
+                }
+            ],
+            "description": "常用工具(common tools/programme)",
+            "time": "2018-09-22T05:42:31+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -4552,7 +4594,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "ccwwonebyone/manpro": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
