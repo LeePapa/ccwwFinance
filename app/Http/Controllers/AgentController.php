@@ -107,7 +107,7 @@ class AgentController extends Controller
     public function destroy($id)
     {
         $res = $this->agentService->delete($id);
-        return $res ? $this->success() : $this->error();
+        return $res ? $this->success() : $this->error('已有用户使用该代理无法删除');
     }
 
     public function agents()

@@ -1,23 +1,30 @@
 body,html{
     padding: 0;
     margin: 0;
+    width: 100%;
+    height: 100%;
 }
 .layout-header{
     color: #fff;
     height: 70px;
     font-size: 60px;
     line-height: 60px;
-    padding-left: 30px;
+    /*padding-left: 30px;*/
     background-color: #343a40;
+    /*position: fixed;*/
+    width: 100%;
+    /*z-index: 2077;*/
 }
 .layout-sidebar{
+    /*margin-top:70px;*/
     height:calc(100% - 70px);
     width: 300px;
     position: fixed;
     background-color: #545c64;
-    z-index: 1500;
+    /*z-index: 2;*/
 }
 .layout-content{
+    /*padding-top: 70px;*/
     height:calc(100% - 70px);
     margin-left:300px;
     width: calc(100% - 300px);

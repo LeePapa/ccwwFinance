@@ -21,16 +21,24 @@ class UserService extends Service{
     public function update($id, $data)
     {
         $old_id = User::where('phone', $data['phone'])->where('status', 1)->value('id');
-        if($id && $old_id != $id) return false;
+        if($old_id && $old_id != $id) return false;
         return User::where('id', $id)->update($data);
     }
 
     public function show($search = [])
     {
         $where[] = ['users.status', '=', 1];
+        $user_id = auth()->user()->id;
         if(isset($search['username'])) $where[] = ['username', 'like', '%'.$search['username'].'%'];
-        return User::select('users.*','agents.name as agent_name')->where($where)
+        $data =  User::select('users.*','agents.name as agent_name')->where($where)->where('pid', $user_id)->orWhere('users.id', $user_id)
                 ->leftJoin('agents', 'agents.id', 'users.agent_id')->paginate(10)->toArray();
+        foreach ($data['data'] as &$info) {
+            $info['can_del'] = $info['id'] == $user_id ? false : true;
+            $info['expend']  = $info['expend'] / 100;
+            $info['income']  = $info['income'] / 100;
+            $info['profit']  = $info['income'] - $info['expend'];
+        }
+        return $data;
     }
 
     public function read($id)
@@ -59,7 +67,7 @@ class UserService extends Service{
 
     public function users($data = [])
     {
-        return User::select('username', 'phone', 'users.id', 'agents.name as agent_name')
+        return User::select('username', 'phone', 'users.id', 'agents.name as agent_name')->where('users.status', 1)
                    ->leftJoin('agents', 'users.agent_id', 'agents.id')
                    ->where('pid', auth()->user()->id)->get()->toArray();
     }

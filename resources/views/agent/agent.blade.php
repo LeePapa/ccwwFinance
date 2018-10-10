@@ -3,7 +3,7 @@
 @section('title', '代理级别')
 
 @section('content')
-<div id="agent">
+<el-scrollbar id="agent" style="height:100%;">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>代理级别</span>
@@ -36,6 +36,7 @@
             </el-table-column>
         </el-table>
         <el-pagination style="float: right;"
+            @current-change="pageChange"
             layout="prev, pager, next"
             :total="total">
         </el-pagination>
@@ -54,8 +55,7 @@
         <el-button type="primary" @click="makeSure()">确 定</el-button>
       </span>
     </el-dialog>
-
-</div>
+</el-scrollbar>
 @endsection
 
 @section('js')
@@ -73,15 +73,21 @@
             total:0
         },
         methods:{
-            initInfo:function () {
+            initInfo:function (page) {
                 this.$axios({
                     method:'get',
-                    url:'/agent'
+                    url:'/agent',
+                    params:{
+                        page:page
+                    }
                 })
                 .then( res => {
                     this.agentData = res.data.data.data;
                     this.total = res.data.data.total
                 })
+            },
+            pageChange:function(page){
+                this.initInfo(page)
             },
             add:function(){
                 this.dialogVisible = true;

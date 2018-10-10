@@ -58,8 +58,10 @@
               url:'/admin/login',
               data:this.form
             })
-            .then(response => {
-              window.location.href = '/view/product_exchange'
+            .then(res => {
+              if(res.data.code == 200){
+                window.location.href = '/view/product_exchange'
+              }
             });
           }
       }

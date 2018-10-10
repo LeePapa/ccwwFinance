@@ -3,7 +3,7 @@
 @section('title', '商品')
 
 @section('content')
-<div id="product">
+<el-scrollbar id="product" style="height:100%;">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>商品</span>
@@ -38,7 +38,7 @@
                 :key="agent.id"
                 :label="agentName(agent.name)">
                 <template slot-scope="scope">
-                  @{{scope.row.prices[agent.id].price}}
+                  @{{scope.row.prices[agent.id] ? scope.row.prices[agent.id] : '0'}}
                 </template>
             </el-table-column>
 
@@ -51,6 +51,7 @@
             </el-table-column>
         </el-table>
         <el-pagination style="float: right;"
+            @current-change="pageChange"
             layout="prev, pager, next"
             :total="total">
         </el-pagination>
@@ -70,9 +71,9 @@
             </template>
             </el-select>
         </el-form-item>
-        <el-form-item label="商品库存">
+        <!-- <el-form-item label="商品库存">
             <el-input-number v-model="form.stock"></el-input-number>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item  v-for="agent in agents" :label="agentName(agent.name)" :key="agent.id">
             <el-input-number :precision="2" v-model="form.prices[agent.id]"></el-input-number>
         </el-form-item>
@@ -82,8 +83,7 @@
         <el-button type="primary" @click="makeSure()">确 定</el-button>
       </span>
     </el-dialog>
-
-</div>
+</el-scrollbar>
 @endsection
 
 @section('js')
@@ -95,7 +95,7 @@
             form:{
                 id:'',
                 name:'',
-                stock:0,
+                // stock:0,
                 prices:{}
             },
             dialogVisible:false,
@@ -105,15 +105,21 @@
             brands:[]
         },
         methods:{
-            initInfo:function () {
+            initInfo:function (page) {
                 this.$axios({
                     method:'get',
-                    url:'/product'
+                    url:'/product',
+                    params:{
+                        page:page
+                    }
                 })
                 .then( res => {
                     this.productData = res.data.data.data;
                     this.total = res.data.data.total
                 })
+            },
+            pageChange:function(page){
+                this.initInfo(page)
             },
             initAgents:function(){
                 this.$axios({
@@ -142,14 +148,14 @@
                 this.form = {
                     id:'',
                     name:'',
-                    stock:0,
+                    // stock:0,
                     prices:{}
                 };
             },
             edit:function(item){
                 this.form = item;
                 for(index in item.prices){
-                    this.$set(this.form.prices,item.prices[index].id, item.prices[index].price)
+                    this.$set(this.form.prices, index, item.prices[index])
                 }
                 this.dialogVisible = true;
                 this.action = 'edit';

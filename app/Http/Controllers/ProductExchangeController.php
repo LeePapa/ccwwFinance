@@ -22,9 +22,9 @@ class ProductExchangeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->success($this->productExchangeService->show());
+        return $this->success($this->productExchangeService->show($request->all()));
     }
 
     /**
@@ -99,6 +99,12 @@ class ProductExchangeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = $this->productExchangeService->delete($id);
+        return $res ? $this->success() : $this->error();
+    }
+
+    public function monthStatistics(Request $request, $month)
+    {
+       return $this->success($this->productExchangeService->monthStatistics($month));
     }
 }

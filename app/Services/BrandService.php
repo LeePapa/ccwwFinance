@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 use App\Model\Brand;
+use App\Model\Product;
 
 class BrandService extends Service{
 
@@ -12,13 +13,14 @@ class BrandService extends Service{
 
     public function delete($id)
     {
+        if(Product::where('brand_id', $id)->where('status', 1)->first()) return false;
         return Brand::where('id', $id)->update(['status'=>0]);
     }
 
     public function update($id, $data)
     {
         $old_id = Brand::where('brand_name', $data['brand_name'])->where('status', 1)->value('id');
-        if($id && $old_id != $id) return false;
+        if($old_id && $old_id != $id) return false;
         return Brand::where('id', $id)->update($data);
     }
 
@@ -36,7 +38,7 @@ class BrandService extends Service{
 
     public function brands()
     {
-        $data = Brand::select('id', 'brand_name')->get();
+        $data = Brand::select('id', 'brand_name')->where('status', 1)->get();
         return $data ? $data->toArray() : [];
     }
 }

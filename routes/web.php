@@ -12,25 +12,36 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.master');
+    return redirect('/view/login');
 });
-//页面
-Route::prefix('view')->group(function(){
-    Route::get('agent', 'AgentController@blade');
-    Route::get('user', 'UserController@blade');
-    Route::get('brand', 'BrandController@blade');
-    Route::get('product', 'ProductController@blade');
-    Route::get('product_exchange', 'ProductExchangeController@blade');
-    Route::get('login', 'UserController@loginBlade');
-});
+Route::middleware('login.check')->group(function(){
+    //页面
+    Route::prefix('view')->group(function(){
+        Route::get('agent', 'AgentController@blade');
+        Route::get('user', 'UserController@blade');
+        Route::get('brand', 'BrandController@blade');
+        Route::get('product', 'ProductController@blade');
+        Route::get('product_exchange', 'ProductExchangeController@blade');
+        Route::get('echart', 'ProductController@echartBlade');
+        Route::get('login', 'UserController@loginBlade');
+    });
 
-Route::prefix('admin')->group(function(){
-    Route::post('login', 'UserController@login');
-});
+    Route::prefix('admin')->group(function(){
+        Route::post('login', 'UserController@login');
+    });
 
-//资源管理路由
-Route::resource('agent', 'AgentController');
-Route::resource('user', 'UserController');
-Route::resource('brand', 'BrandController');
-Route::resource('product', 'ProductController');
-Route::resource('product_exchange', 'ProductExchangeController');
+    Route::prefix('statistics')->group(function(){
+        Route::get('brand', 'ProductExchangeController@brandStatistics');       //品牌纬度统计
+        Route::get('product', 'ProductExchangeController@productStatistics');   //商品纬度统计
+        Route::get('user', 'ProductExchangeController@userStatistics');     //用户纬度统计
+        Route::get('month/{month}', 'ProductExchangeController@monthStatistics');   //月度报表分析
+    });
+
+    //资源管理路由
+    Route::resource('agent', 'AgentController');    //代理级别
+    Route::resource('user', 'UserController');      //代理用户
+    Route::resource('brand', 'BrandController');    //品牌
+    Route::resource('product', 'ProductController');    //商品
+    Route::resource('product_exchange', 'ProductExchangeController');   //账单
+    Route::put('product/{product}/inbound', 'ProductController@inbound');   //增加库存
+});

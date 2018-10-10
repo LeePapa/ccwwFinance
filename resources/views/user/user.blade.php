@@ -3,7 +3,7 @@
 @section('title', '代理用户')
 
 @section('content')
-<div id="user">
+<el-scrollbar id="user" style="height:100%;">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>代理用户</span>
@@ -16,7 +16,7 @@
             <el-table-column
               prop="id"
               label="ID"
-              width="180">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="username"
@@ -39,10 +39,25 @@
               width="180">
             </el-table-column>
             <el-table-column
+              prop="expend"
+              label="支出"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="income"
+              label="收入"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="profit"
+              label="结余"
+              width="180">
+            </el-table-column>
+            <el-table-column
                 label="操作">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
-                  <el-button type="text" size="small" @click="remove(scope.row)">删除</el-button>
+                  <el-button type="text" size="small" @click="remove(scope.row)" :disabled="!scope.row.can_del">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -78,8 +93,7 @@
         <el-button type="primary" @click="makeSure()">确 定</el-button>
       </span>
     </el-dialog>
-
-</div>
+</el-scrollbar>
 @endsection
 
 @section('js')

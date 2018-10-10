@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 use App\Model\Agent;
+use App\Model\User;
 
 class AgentService extends Service{
 
@@ -12,13 +13,14 @@ class AgentService extends Service{
 
     public function delete($id)
     {
+        if(User::where('agent_id', $id)->where('status', 1)->first()) return false;
         return Agent::where('id', $id)->update(['status'=>0]);
     }
 
     public function update($id, $data)
     {
         $old_id = Agent::where('name', $data['name'])->where('status', 1)->value('id');
-        if($id && $old_id != $id) return false;
+        if($old_id && $old_id != $id) return false;
         return Agent::where('id', $id)->update($data);
     }
 
@@ -36,7 +38,7 @@ class AgentService extends Service{
 
     public function agents()
     {
-        $data = Agent::select('id', 'name')->get();
+        $data = Agent::select('id', 'name')->where('status', 1)->get();
         return $data ? $data->toArray() : [];
     }
 }

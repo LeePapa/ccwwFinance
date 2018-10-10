@@ -3,7 +3,7 @@
 @section('title', '品牌')
 
 @section('content')
-<div id="brand">
+<el-scrollbar id="brand" style="height:100%;">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>品牌</span>
@@ -54,8 +54,7 @@
         <el-button type="primary" @click="makeSure()">确 定</el-button>
       </span>
     </el-dialog>
-
-</div>
+</el-scrollbar>
 @endsection
 
 @section('js')

@@ -18,6 +18,11 @@ class ProductController extends Controller
         return view('product.product');
     }
 
+    public function echartBlade()
+    {
+        return view('product.echart');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,13 +55,13 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(),[
             'brand_id' => 'required',
             'name'     => 'required',
-            'stock'    => 'required',
+            // 'stock'    => 'required',
         ]);
         if ($validator->fails()) $this->error();
         $res = $this->productService->store([
             'brand_id'=>$request->brand_id,
             'name'    =>$request->name,
-            'stock'   =>$request->stock,
+            // 'stock'   =>$request->stock,
             'prices'  =>$request->prices,
         ]);
         return $res ? $this->success() : $this->error('该名称已使用！');
@@ -125,5 +130,12 @@ class ProductController extends Controller
         return $this->success($this->productService->products([
             'brand_id'=>$request->brand_id
         ]));
+    }
+
+    public function inbound(Request $request, $id)
+    {
+        return $this->success($this->productService->inbound([
+            'stock'=>$request->stock,
+        ], $id));
     }
 }
