@@ -241,7 +241,7 @@
                         }],
                         receive_id:''
                     };
-                    dialogVisible = false;
+                    this.dialogVisible = false;
                 })
             },
             showdel:function(i){

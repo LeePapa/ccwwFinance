@@ -54,7 +54,7 @@ class ProductExchangeService extends Service{
         $data = ProductExchange::select('product_exchanges.*', 'users.username', 'users.phone')
                                 ->where('product_exchanges.status', 1)->where('user_id', $user_id)
                                 ->whereBetween('product_exchanges.created_at', [$btime, $etime])
-                                ->leftJoin('users', 'product_exchanges.receive_id', 'users.id')->paginate(10)->toArray();
+                                ->leftJoin('users', 'product_exchanges.receive_id', 'users.id')->orderBy('created_at', 'desc')->paginate(10)->toArray();
         foreach ($data['data'] as &$info) {
             $info['total'] = $info['profit'] = 0;
             $info['details'] = $this->exchangeDetail($info['id']);

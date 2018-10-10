@@ -20,38 +20,31 @@
             </el-table-column>
             <el-table-column
               prop="username"
-              label="用户名"
-              width="180">
+              label="用户名">
             </el-table-column>
             <el-table-column
               prop="phone"
-              label="手机号"
-              width="180">
+              label="手机号">
             </el-table-column>
             <el-table-column
               prop="weixin"
-              label="微信"
-              width="180">
+              label="微信">
             </el-table-column>
             <el-table-column
               prop="agent_name"
-              label="代理级别"
-              width="180">
+              label="代理级别">
             </el-table-column>
             <el-table-column
               prop="expend"
-              label="支出"
-              width="180">
+              label="支出">
             </el-table-column>
             <el-table-column
               prop="income"
-              label="收入"
-              width="180">
+              label="收入">
             </el-table-column>
             <el-table-column
               prop="profit"
-              label="结余"
-              width="180">
+              label="结余">
             </el-table-column>
             <el-table-column
                 label="操作">
