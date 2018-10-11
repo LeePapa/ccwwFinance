@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Overtrue\EasyWeChat;
+use EasyWeChat;
 
 class WeChatController extends Controller
 {
