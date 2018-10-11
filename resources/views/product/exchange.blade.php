@@ -121,7 +121,8 @@
                 // btime:'',
                 // etime:'',
                 page:1,
-                month:''
+                month:'',
+                page:1
             },
             exchangeData:[],
             total:0,
@@ -149,6 +150,7 @@
             },
             pageChange:function(page){
                 this.form.page = page;
+                this.initInfo();
             },
             remove:function(item) {
                 this.$remove('/product_exchange/'+item.id,res=>{
