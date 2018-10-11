@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use EasyWeChat;
 
 class WeChatController extends Controller
 {
     public function server()
     {
+        Log::info('微信调用');
         $app = EasyWeChat::officialAccount();
 
         $app->server->push(function ($message) {
