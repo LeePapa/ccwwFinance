@@ -51,7 +51,7 @@ class ProductExchangeService extends Service{
         $etime = date('Y-m-d H:i:s', strtotime($search['month'] . ' +1 months') -1);
 
         $user_id = auth()->user()->id;
-        $data = ProductExchange::select('product_exchanges.*', 'users.username', 'users.phone')
+        $data = ProductExchange::select('product_exchanges.*', 'users.username', 'users.phone', 'users.weixin')
                                 ->where('product_exchanges.status', 1)->where('user_id', $user_id)
                                 ->whereBetween('product_exchanges.created_at', [$btime, $etime])
                                 ->leftJoin('users', 'product_exchanges.receive_id', 'users.id')->orderBy('created_at', 'desc')->paginate(10)->toArray();

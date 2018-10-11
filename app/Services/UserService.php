@@ -67,7 +67,7 @@ class UserService extends Service{
 
     public function users($data = [])
     {
-        return User::select('username', 'phone', 'users.id', 'agents.name as agent_name')->where('users.status', 1)
+        return User::select('username', 'phone', 'weixin','users.id', 'agents.name as agent_name')->where('users.status', 1)
                    ->leftJoin('agents', 'users.agent_id', 'agents.id')
                    ->where('pid', auth()->user()->id)->get()->toArray();
     }

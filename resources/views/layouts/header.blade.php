@@ -9,11 +9,12 @@
       title="详情"
       :visible.sync="dialogVisible"
       width="60%">
-        <el-form ref="form" label-width="100px">
+        <el-form ref="form" label-width="80px">
             <el-form-item v-for="(record,index) in form.products" label="商品"
                 :key="index.toString()"
                 v-on:mouseover.native="activeIndex(index)">
                 <el-select
+                    style="width: 150px"
                     v-model="record.brand_id"
                     placeholder="选择品牌"
                     @change="brandChange">
@@ -21,7 +22,11 @@
                     <el-option v-bind:key="brand.id" v-bind:label="brand.brand_name" v-bind:value="brand.id"></el-option>
                 </template>
                 </el-select>
-                <el-select v-model="record.product_id" placeholder="选择商品" @change="productChange">
+                <el-select
+                    style="width: 150px"
+                    v-model="record.product_id"
+                    placeholder="选择商品"
+                    @change="productChange">
                 <template v-for="product in products">
                     <el-option v-bind:key="product.id" v-bind:label="product.name" v-bind:value="product.id"></el-option>
                 </template>
@@ -33,7 +38,12 @@
                 <el-button icon="el-icon-delete" v-if="showdel(index)" @click="removeParam(index)"></el-button>
             </el-form-item>
             <el-form-item label="接收人">
-                <el-select v-model="form.receive_id" filterable placeholder="请选择" @change="userChange">
+                <el-select
+                    style="width: 150px"
+                    v-model="form.receive_id"
+                    filterable
+                    placeholder="请选择"
+                    @change="userChange">
                     <el-option
                       v-for="user in users"
                       :key="user.id"
@@ -253,7 +263,7 @@
                 this.form.products.splice(i, 1);
             },
             formatUser:function(user){
-                return user.username + '-' + user.phone
+                return user.weixin;
             },
             userChange:function(id){
                 for (var i = this.users.length - 1; i >= 0; i--) {

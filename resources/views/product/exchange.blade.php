@@ -90,13 +90,13 @@
               label="盈利">
             </el-table-column>
             <el-table-column
-              prop="username"
-              label="接收人">
+              prop="weixin"
+              label="微信">
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="phone"
               label="手机号">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
                 label="操作">
                 <template slot-scope="scope">
