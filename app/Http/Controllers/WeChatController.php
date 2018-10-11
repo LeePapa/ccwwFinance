@@ -58,7 +58,7 @@ class WeChatController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -125,5 +125,28 @@ class WeChatController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function wetChatMenu()
+    {
+        $app = EasyWeChat::officialAccount();
+        $buttons = [
+            [
+                "type" => "click",
+                "name" => "记一笔账",
+                "url"  => "https://manpro.haoijia.com/exchange"
+            ],
+            [
+                "type" => "click",
+                "name" => "进货",
+                "url"  => "https://manpro.haoijia.com/exchange"
+            ],
+            [
+                "type" => "click",
+                "name" => "本月账单",
+                "url"  => "https://manpro.haoijia.com/exchange"
+            ]
+        ];
+        $app->menu->create($buttons);
     }
 }
