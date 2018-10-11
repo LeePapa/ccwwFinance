@@ -27,7 +27,7 @@ class BrandService extends Service{
     public function show($search = [])
     {
         $where['status'] = 1;
-        if(isset($search['name'])) $where[] = ['brand_name', 'like', '%'.$search['name'].'%'];
+        if(isset($search['brand_name'])) $where[] = ['brand_name', 'like', '%'.$search['brand_name'].'%'];
         return Brand::where($where)->paginate(10)->toArray();
     }
 

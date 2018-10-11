@@ -8,6 +8,15 @@
         <div slot="header" class="clearfix">
           <span>品牌</span>
         </div>
+        <el-form :inline="true" :model="form">
+            <el-form-item label="品牌">
+                <el-input v-model="search.brand_name"></el-input>
+            </el-form-item>
+          <el-form-item>
+            <el-button icon="el-icon-search" circle type="success" @click="initInfo()"></el-button>
+          </el-form-item>
+        </el-form>
+
         <el-button type="primary" plain @click="add()" style="margin-bottom: 10px;">新增</el-button>
         <el-table
             :data="brandData"
@@ -36,6 +45,7 @@
             </el-table-column>
         </el-table>
         <el-pagination style="float: right;"
+            @current-change="pageChange"
             layout="prev, pager, next"
             :total="total">
         </el-pagination>
@@ -67,6 +77,9 @@
                 id:'',
                 brand_name:''
             },
+            search:{
+                brand_name:''
+            },
             dialogVisible:false,
             action:'add',
             total:0
@@ -75,12 +88,17 @@
             initInfo:function () {
                 this.$axios({
                     method:'get',
-                    url:'/brand'
+                    url:'/brand',
+                    params:this.search
                 })
                 .then( res => {
                     this.brandData = res.data.data.data;
                     this.total = res.data.data.total
                 })
+            },
+            pageChange:function(page){
+                this.search.page = page;
+                this.initInfo();
             },
             add:function(){
                 this.dialogVisible = true;

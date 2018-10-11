@@ -16,12 +16,11 @@
             <el-table-column
               prop="id"
               label="ID"
-              width="180">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="name"
-              label="名称"
-              width="180">
+              label="名称">
             </el-table-column>
             <el-table-column
               prop="created_at"

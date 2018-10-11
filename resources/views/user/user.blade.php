@@ -8,6 +8,26 @@
         <div slot="header" class="clearfix">
           <span>代理用户</span>
         </div>
+        <el-form :inline="true" :model="form">
+            <el-form-item label="代理">
+                <el-select
+                    style="width: 150px"
+                    v-model="search.agent_id"
+                    placeholder="选择级别">
+                    <template v-for="agent in agents">
+                        <el-option v-bind:key="agent.id" v-bind:label="agent.name" v-bind:value="agent.id"></el-option>
+                    </template>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="微信">
+                <el-input style="width: 150px" v-model="search.name"></el-input>
+            </el-form-item>
+
+          <el-form-item>
+            <el-button icon="el-icon-search" circle type="success" @click="initInfo()"></el-button>
+          </el-form-item>
+        </el-form>
+
         <el-button type="primary" plain @click="add()" style="margin-bottom: 10px;">新增</el-button>
         <el-table
             :data="userData"
@@ -55,6 +75,7 @@
             </el-table-column>
         </el-table>
         <el-pagination style="float: right;"
+            @current-change="pageChange"
             layout="prev, pager, next"
             :total="total">
         </el-pagination>
@@ -103,6 +124,11 @@
                 weixin:'',
                 name:''
             },
+            search:{
+                agent_id:'',
+                weixin:'',
+                page:1
+            },
             dialogVisible:false,
             action:'add',
             total:0
@@ -111,12 +137,17 @@
             initInfo:function () {
                 this.$axios({
                     method:'get',
-                    url:'/user'
+                    url:'/user',
+                    params:this.search
                 })
                 .then( res => {
                     this.userData = res.data.data.data;
                     this.total = res.data.data.total
                 })
+            },
+            pageChange:function(page){
+                this.search.page = page;
+                initInfo();
             },
             initAgents:function() {
                 this.$axios({

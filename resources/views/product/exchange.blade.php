@@ -10,18 +10,6 @@
         </div>
         <el-form :inline="true" :model="form">
           <el-form-item label="日期选择">
-            <!-- <el-date-picker
-              v-model="form.btime"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker>
-            至
-            <el-date-picker
-              v-model="form.etime"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker> -->
-
             <el-date-picker
               @change="dateChange"
               v-model="form.month"
@@ -29,11 +17,7 @@
               value-format="yyyy-MM"
               placeholder="选择月">
             </el-date-picker>
-
           </el-form-item>
-          <!-- <el-form-item>
-            <el-button icon="el-icon-search" circle type="success" @click="initInfo()"></el-button>
-          </el-form-item> -->
         </el-form>
         <span style="float: right;font-size: 14px;color: #409EFF;padding-right: 30px;">
             收入:@{{dataTotal.total}}

@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if($request->type == 'select') return $this->users($request);
-        return $this->success($this->userService->show());
+        return $this->success($this->userService->show($request->all()));
     }
 
     /**

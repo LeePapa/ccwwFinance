@@ -18,7 +18,7 @@ body,html{
 .layout-sidebar{
     /*margin-top:70px;*/
     height:calc(100% - 70px);
-    width: 300px;
+    width: 250px;
     position: fixed;
     background-color: #545c64;
     /*z-index: 2;*/
@@ -26,8 +26,8 @@ body,html{
 .layout-content{
     /*padding-top: 70px;*/
     height:calc(100% - 70px);
-    margin-left:300px;
-    width: calc(100% - 300px);
+    margin-left:250px;
+    width: calc(100% - 250px);
 }
 .layout-footer{
 

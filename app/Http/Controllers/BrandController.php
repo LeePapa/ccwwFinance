@@ -26,7 +26,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         if($request->type == 'select') return $this->brands();
-        return $this->success($this->brandService->show());
+        return $this->success($this->brandService->show($request->all()));
     }
 
     /**

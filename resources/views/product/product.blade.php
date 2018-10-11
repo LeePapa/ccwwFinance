@@ -8,7 +8,28 @@
         <div slot="header" class="clearfix">
           <span>商品</span>
         </div>
-        <el-button type="primary" plain @click="add()" style="margin-bottom: 10px;">新增</el-button>
+        <el-form :inline="true" :model="form">
+            <el-form-item label="品牌">
+                <el-select
+                        style="width: 150px"
+                        v-model="search.brand_id"
+                        placeholder="选择品牌">
+                <template v-for="brand in brands">
+                    <el-option v-bind:key="brand.id" v-bind:label="brand.brand_name" v-bind:value="brand.id"></el-option>
+                </template>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="名称">
+                <el-input v-model="search.name"></el-input>
+            </el-form-item>
+
+          <el-form-item>
+            <el-button icon="el-icon-search" circle type="success" @click="initInfo()"></el-button>
+          </el-form-item>
+        </el-form>
+        <!-- <el-form-item> -->
+            <el-button type="primary" plain @click="add()" style="margin-bottom: 10px;">新增</el-button>
+          <!-- </el-form-item> -->
         <el-table
             :data="productData"
             border
@@ -16,17 +37,15 @@
             <el-table-column
               prop="id"
               label="ID"
-              width="180">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="brand_name"
-              label="品牌名称"
-              width="180">
+              label="品牌名称">
             </el-table-column>
             <el-table-column
               prop="name"
-              label="名称"
-              width="180">
+              label="名称">
             </el-table-column>
             <el-table-column
               prop="stock"
@@ -41,7 +60,6 @@
                   @{{scope.row.prices[agent.id] ? scope.row.prices[agent.id] : '0'}}
                 </template>
             </el-table-column>
-
             <el-table-column
                 label="操作">
                 <template slot-scope="scope">
@@ -98,6 +116,11 @@
                 // stock:0,
                 prices:{}
             },
+            search:{
+                brand_id:'',
+                name:'',
+                page:1
+            },
             dialogVisible:false,
             action:'add',
             total:0,
@@ -105,13 +128,11 @@
             brands:[]
         },
         methods:{
-            initInfo:function (page) {
+            initInfo:function () {
                 this.$axios({
                     method:'get',
                     url:'/product',
-                    params:{
-                        page:page
-                    }
+                    params:this.search
                 })
                 .then( res => {
                     this.productData = res.data.data.data;
@@ -119,7 +140,8 @@
                 })
             },
             pageChange:function(page){
-                this.initInfo(page)
+                this.search.page = page;
+                this.initInfo()
             },
             initAgents:function(){
                 this.$axios({

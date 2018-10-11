@@ -31,7 +31,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if($request->type == 'select') return $this->products($request);
-        return $this->success($this->productService->show());
+        return $this->success($this->productService->show([
+            'name'    =>$request->name,
+            'brand_id'=>$request->brand_id
+        ]));
     }
 
     /**

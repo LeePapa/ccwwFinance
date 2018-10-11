@@ -58,6 +58,7 @@ class ProductService extends Service{
     {
         $where['products.status'] = 1;
         if(isset($search['name'])) $where[] = ['name', 'like', '%'.$search['name'].'%'];
+        if(isset($search['brand_id'])) $where[] = ['brand_id', $search['brand_id']];
         $data = Product::select('products.*','brands.brand_name')->where($where)->leftJoin('brands','brands.id','products.brand_id')
                        ->orderBy('stock')->orderBy('brand_id')->paginate(10)->toArray();
         foreach($data['data'] as &$info){

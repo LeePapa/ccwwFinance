@@ -29,7 +29,8 @@ class UserService extends Service{
     {
         $where[] = ['users.status', '=', 1];
         $user_id = auth()->user()->id;
-        if(isset($search['username'])) $where[] = ['username', 'like', '%'.$search['username'].'%'];
+        if(isset($search['weixin'])) $where[] = ['weixin', 'like', '%'.$search['weixin'].'%'];
+        if($search['agent_id']) $where[] = ['agent_id',$search['agent_id']];
         $data =  User::select('users.*','agents.name as agent_name')->where($where)->where('pid', $user_id)->orWhere('users.id', $user_id)
                 ->leftJoin('agents', 'agents.id', 'users.agent_id')->paginate(10)->toArray();
         foreach ($data['data'] as &$info) {
