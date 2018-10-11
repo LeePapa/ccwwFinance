@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return redirect('/view/login');
 });
+//微信认证
+Route::any('wechat', 'WeChatController@server');
+
 Route::middleware('login.check')->group(function(){
     //页面
     Route::prefix('view')->group(function(){
