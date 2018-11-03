@@ -16,7 +16,7 @@ class LoginCheck
      */
     public function handle($request, Closure $next)
     {
-        Log::info($request->header());
+        // Log::info($request->header());
         $user = auth()->user();
         $uri  = $request->getRequestUri();
         if($request->ajax() || $request->wantsJson()){
