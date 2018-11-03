@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class LoginCheck
 {
@@ -15,6 +16,7 @@ class LoginCheck
      */
     public function handle($request, Closure $next)
     {
+        Log::info($request->header());
         $user = auth()->user();
         $uri  = $request->getRequestUri();
         if($request->ajax() || $request->wantsJson()){
