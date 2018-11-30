@@ -8,6 +8,8 @@ use Validator;
 
 class BrandController extends Controller
 {
+    protected $brandService;
+    
     public function __construct()
     {
         $this->brandService = new BrandService();

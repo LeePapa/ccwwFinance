@@ -8,6 +8,8 @@ use Validator;
 
 class AgentController extends Controller
 {
+    protected $agentService;
+
     public function __construct()
     {
         $this->agentService = new AgentService();
