@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Services;
+
 use Manpro\Manpro;
 
 class Service{
